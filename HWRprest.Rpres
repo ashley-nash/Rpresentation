@@ -1,0 +1,75 @@
+HWRprest
+========================================================
+author: sunhe
+date: 2020/02
+autosize: true
+
+First Slide
+========================================================
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+sep=read.csv("sep.csv", header = F)
+library(ggplot2)
+library(tidyverse)
+library(plotly)
+```
+
+
+The data we use is from transportation situation of Beijing in 2017 septamber 
+There are some variables:
+
+- the grid number
+- the number of people departue
+- the number of people enter
+- Number of people stay inside the grid at the counting hour begin
+- the time counted by 2 hours
+
+
+========================================================
+
+
+```{r}
+sep$V3=as.numeric(sep$V3)
+plot(sep$V3)
+```
+
+========================================================
+
+```{r}
+plot =sep %>% ggplot(mapping =  aes(x = sep$V3, y = sep$V4)) + 
+geom_bar(stat = 'identity', position = position_dodge()) + 
+labs(title = 'by grid number people departure', x = 'grid', y = 'number of people') +
+theme_classic()
+plot
+```
+
+We can see even for grid, it's also like a normal distribution, but the grids only show the location details. Practically, this plot means the grids number between 1000 to 2000 have more people movings
+
+
+
+========================================================
+
+```{r}
+plot2 = sep %>%ggplot(mapping =  aes(x = V2, y = V5)) + 
+geom_bar(stat = 'identity', position = position_dodge()) + 
+labs(title = 'by time', x = 'time', y = 'people arrivel') +
+theme_classic()
+plot2
+```
+
+Now we are looking a plot drawing with time. we can see the 18 is the most people arrival.Becasue it's the night pick hour.
+
+========================================================
+
+```{r}
+plot3 = sep %>%ggplot(mapping =  aes(x = V4, y = V5)) + geom_point()+
+labs(title = 'relation', x = 'departure', y = 'arrive') +
+theme_classic()
+plot3
+```
+
+We can see the departue and arrival are relative. The most people departure, the most people arrival.
+========================================================
+
+
